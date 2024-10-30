@@ -13,8 +13,8 @@ public class ChessBoard extends JPanel {
     private ImageIcon peonRojo = new ImageIcon(getClass().getResource("/util/images/peonRojo.png"));
     private ImageIcon reinaNegra = new ImageIcon(getClass().getResource("/util/images/reinaNegra.png"));
     private ImageIcon reinaRoja = new ImageIcon(getClass().getResource("/util/images/reinaRoja.png"));
-    private ImageIcon reyNegro = new ImageIcon(getClass().getResource("/util/images/alfilRojo.png"));
-    private ImageIcon reyRojo = new ImageIcon(getClass().getResource("/util/images/alfilRojo.png"));
+    private ImageIcon reyNegro = new ImageIcon(getClass().getResource("/util/images/reyNegro.png"));
+    private ImageIcon reyRojo = new ImageIcon(getClass().getResource("/util/images/reyRojo.png"));
     private ImageIcon torreNegra = new ImageIcon(getClass().getResource("/util/images/torreNegra.png"));
     private ImageIcon torreRoja = new ImageIcon(getClass().getResource("/util/images/torreRojo.png"));
 
