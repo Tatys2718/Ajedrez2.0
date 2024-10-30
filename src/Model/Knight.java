@@ -10,7 +10,7 @@ public class Knight extends Piece{
         return false;
     }
 
-    @Override
+
     public void move(String destino, int indice) {
     }
 
