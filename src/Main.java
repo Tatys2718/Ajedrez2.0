@@ -1,3 +1,4 @@
+import Controller.ChessController;
 import Controller.ControladorMenu;
 import Model.MovementsAnalyzer;
 import View.ChessBoard;
@@ -10,10 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file = new File ("src\\Partidas\\pruebaConFe.txt");
+        File file = new File ("src\\Partidas\\movimientosBasicos.txt");
         MovementsAnalyzer reader = new MovementsAnalyzer(file);
         reader.Lecture();
-        reader.imprimirMovimientos();
 
         JFrame Ajedrez = new JFrame("Vizor de partidas de ajedrez");
         Ajedrez.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +23,10 @@ public class Main {
         Ajedrez.add(chessBoard);
         Ajedrez.setVisible(true);
 
-        //TraductorMovimientos traductor = new TraductorMovimientos(reader, chessBoard);
+        ChessController chessController = new ChessController(chessBoard);
+
+        chessBoard.revalidate(); // Revalidar el panel
+        chessBoard.repaint();    // Redibujar el panel
 
         JFrame menu = new JFrame("Menu juego");
 
@@ -32,7 +35,7 @@ public class Main {
         Menu meniu = new Menu();
         menu.add(meniu);
         menu.setVisible(true);
-        //ControladorMenu controladorMenu = new ControladorMenu(meniu, reader, traductor);
+        ControladorMenu controladorMenu = new ControladorMenu(meniu, reader);
     }
 
 }

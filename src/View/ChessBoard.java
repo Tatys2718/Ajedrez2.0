@@ -5,18 +5,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class ChessBoard extends JPanel {
-    private ImageIcon alfilRojo = new ImageIcon(getClass().getResource("/View/utils/images/alfilRojo.png"));
-    private ImageIcon alfilNegro = new ImageIcon(getClass().getResource("/View/utils/images/alfilNegro.png"));
-    private ImageIcon caballoRojo = new ImageIcon(getClass().getResource("/View/utils/images/caballoRojo.png"));
-    private ImageIcon caballoNegro = new ImageIcon(getClass().getResource("/View/utils/images/caballoNegro.png"));
-    private ImageIcon peonNegro = new ImageIcon(getClass().getResource("/View/utils/images/peonNegro.png"));
-    private ImageIcon peonRojo = new ImageIcon(getClass().getResource("/View/utils/images/peonRojo.png"));
-    private ImageIcon reinaNegra = new ImageIcon(getClass().getResource("/View/utils/images/reinaNegra.png"));
-    private ImageIcon reinaRoja = new ImageIcon(getClass().getResource("/View/utils/images/reinaRoja.png"));
-    private ImageIcon reyNegro = new ImageIcon(getClass().getResource("/View/utils/images/reyNegro.png"));
-    private ImageIcon reyRojo = new ImageIcon(getClass().getResource("/View/utils/images/reyRojo.png"));
-    private ImageIcon torreNegra = new ImageIcon(getClass().getResource("/View/utils/images/torreNegra.png"));
-    private ImageIcon torreRoja = new ImageIcon(getClass().getResource("/View/utils/images/torreRoja.png"));
 
     private JButton[][] buttons = new JButton[8][8];
 
