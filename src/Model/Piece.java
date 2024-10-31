@@ -5,14 +5,20 @@ public abstract class Piece {
     private int positionRow;
     private int positionColumn;
     private ImageIcon image;
+    private boolean isWhite;
 
-    public Piece(int positionRow, int positionColumn, ImageIcon image){
+    public Piece(int positionRow, int positionColumn, boolean isWhite, ImageIcon image){
         this.positionRow = positionRow;
         this.positionColumn = positionColumn;
+        this.isWhite = isWhite;
         this.image = image;
     }
-    public ImageIcon getImage() {
+    public ImageIcon getImage(){
         return image;
+    }
+
+    public boolean isWhite() {
+        return isWhite;
     }
 
     public void setImage(ImageIcon image) {

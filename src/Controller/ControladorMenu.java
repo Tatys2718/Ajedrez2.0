@@ -22,7 +22,7 @@ public class ControladorMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menu.getNextButton()) {
             if (contadorClicks < readerPGN.getMovements().size()) {  // Verifica que no exceda el tamaño
-                readerPGN.DoMovement(contadorClicks);
+                readerPGN.getMovement(contadorClicks);
                 contadorClicks++;
             } else {
                 System.out.println("No hay más movimientos.");
