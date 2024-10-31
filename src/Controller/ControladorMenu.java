@@ -1,20 +1,18 @@
 package Controller;
 import View.Menu;
-import Model.ReaderPGN;
+import Model.MovementsAnalyzer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ControladorMenu implements ActionListener {
     private Menu menu;
-    private ReaderPGN readerPGN;
-    private TraductorMovimientos traductor;
+    private MovementsAnalyzer readerPGN;
     private int contadorClicks = 0;
 
-    public ControladorMenu(Menu menu, ReaderPGN readerPGN, TraductorMovimientos traductor) {
+    public ControladorMenu(Menu menu, MovementsAnalyzer readerPGN) {
         this.menu = menu;
         this.readerPGN = readerPGN;
-        this.traductor = traductor;
 
         // Registrar los escuchadores de los botones
         this.menu.getNextButton().addActionListener(this);
@@ -23,8 +21,8 @@ public class ControladorMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menu.getNextButton()) {
-            if (contadorClicks < readerPGN.getMovimientos().size()) {  // Verifica que no exceda el tamaño
-                traductor.traduccionMovimientos(contadorClicks);
+            if (contadorClicks < readerPGN.getMovements().size()) {  // Verifica que no exceda el tamaño
+                readerPGN.DoMovement(contadorClicks);
                 contadorClicks++;
             } else {
                 System.out.println("No hay más movimientos.");

@@ -1,8 +1,9 @@
 package Model;
+import javax.swing.*;
 
 public class Knight extends Piece{
-    public Knight(int positionRow, int positionColumn) {
-        super(positionRow, positionColumn);
+    public Knight(int positionRow, int positionColumn, ImageIcon image) {
+        super(positionRow, positionColumn, image);
     }
 
     @Override
