@@ -1,6 +1,7 @@
 import Controller.ChessController;
-import Controller.ControladorMenu;
-import Model.MovementsAnalyzer;
+import Controller.MenuController;
+import Controller.MoveController;
+import Controller.ReaderPGN;
 import View.ChessBoard;
 import View.Menu;
 
@@ -12,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         File file = new File ("src\\Partidas\\movimientosBasicos.txt");
-        MovementsAnalyzer reader = new MovementsAnalyzer(file);
+        ReaderPGN reader = new ReaderPGN(file);
         reader.Lecture();
 
         JFrame Ajedrez = new JFrame("Vizor de partidas de ajedrez");
@@ -35,7 +36,7 @@ public class Main {
         Menu meniu = new Menu();
         menu.add(meniu);
         menu.setVisible(true);
-        ControladorMenu controladorMenu = new ControladorMenu(meniu, reader);
+        MenuController controladorMenu = new MenuController(meniu, reader, chessController);
     }
 
 }
