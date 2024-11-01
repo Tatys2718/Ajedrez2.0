@@ -21,20 +21,20 @@ public class MoveController {
         }
     }
 
-    public Move moveTranslation(String pureMove) {
-        Move move;
-        String destiny;
-        if (pureMove.matches("^[NBRQK].*"))
-            destiny = pureMove.substring(1);
-        else
-            destiny = pureMove.substring(0);
-
-        int destinyCol = obtenerDestinoCol(destiny);
-        int destinyRow = obtenerDestinoRow(destiny);
-        char pieceTypeChar = pureMove.charAt(0);
-        move = new Move(pieceTypeChar, destinyCol, destinyRow);
-        return move;
-    }
+//    public Move moveTranslation(String pureMove) {
+//        Move move;
+//        String destiny;
+//        if (pureMove.matches("^[NBRQK].*"))
+//            destiny = pureMove.substring(1);
+//        else
+//            destiny = pureMove.substring(0);
+//
+//        int destinyCol = obtenerDestinoCol(destiny);
+//        int destinyRow = obtenerDestinoRow(destiny);
+//        char pieceTypeChar = pureMove.charAt(0);
+//        move = new Move(pieceTypeChar, destinyCol, destinyRow);
+//        return move;
+//    }
 
     public int obtenerDestinoCol(String destino){
         if (destino == null || destino.isEmpty())

@@ -11,27 +11,34 @@ public class Pawn extends Piece{
 
     @Override
     public boolean validMove(int destRow, int destColumn) {
-
         // Movimiento hacia adelante de 1 o 2 casillas desde la posición inicial
-        int rowDirection = isRed() ? 1 : -1; // Corregido: blanco va hacia arriba, negro hacia abajo
+        int rowDirection = isRed() ? 1 : -1;
+
+        // Obtener la fila y columna actuales
+        int currentRow = getPositionRow();
+        int currentColumn = getPositionColumn();
 
         // Movimiento de 1 casilla adelante
-        if (getPositionColumn() == destColumn && getPositionRow() + rowDirection == destRow) {
+        if (currentColumn == destColumn && currentRow + rowDirection == destRow) {
             return true;
         }
 
         // Movimiento de 2 casillas adelante desde la posición inicial
-        if ((isRed() && getPositionRow() == 2 || !isRed() && getPositionRow() == 7) &&
-                getPositionColumn() == destColumn && getPositionRow() + 2 * rowDirection == destRow) {
-            return true;
+        if ((isRed() && currentRow == 1) || (!isRed() && currentRow == 6)) {
+            // Asegúrate de que el movimiento hacia dos filas adelante es válido
+            if (currentColumn == destColumn && currentRow + 2 * rowDirection == destRow) {
+                return true;
+            }
         }
 
         // Movimiento de captura en diagonal
-        if (Math.abs(getPositionColumn() - destColumn) == 1 && getPositionRow() + rowDirection == destRow) {
+        if (Math.abs(currentColumn - destColumn) == 1 && currentRow + rowDirection == destRow) {
             return true;
         }
 
         // Si no cumple ninguna condición, el movimiento no es válido
         return false;
     }
+
+
 }

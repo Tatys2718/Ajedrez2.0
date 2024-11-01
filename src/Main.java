@@ -12,9 +12,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file = new File ("src\\Partidas\\movimientosBasicos.txt");
+        File file = new File ("src\\Partidas\\pawn_movements_test.txt");
         ReaderPGN reader = new ReaderPGN(file);
         reader.Lecture();
+
+        if (reader.getMovements() != null) System.out.println("Lectura exitosa. Vector lleno.");
 
         JFrame Ajedrez = new JFrame("Vizor de partidas de ajedrez");
         Ajedrez.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -8,7 +8,7 @@ public class Knight extends Piece{
     }
 
     @Override
-    public boolean validPath(int final_x, int final_y) {
+    public boolean validMove(int final_x, int final_y) {
         return false;
     }
 

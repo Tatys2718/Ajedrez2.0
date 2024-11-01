@@ -24,9 +24,10 @@ public class MenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menu.getNextButton()) {
             if (contadorClicks < readerPGN.getMovements().size()) {
-                MoveController moveController = new MoveController();
-//                System.out.println(moveController.moveTranslation(readerPGN.getMovements().get(contadorClicks), contadorClicks).toString());
-//                chessController.movePiece(moveController.moveTranslation(readerPGN.getMovements().get(contadorClicks), contadorClicks));
+//                MoveController moveController = new MoveController();
+                System.out.println("MOVIMIENTO OBTENIDO:" + readerPGN.getMovements().get(contadorClicks)
+                        + "==========================================================================");
+                chessController.movePiece(readerPGN.getMovements().get(contadorClicks), contadorClicks);
                 contadorClicks++;
             } else {
                 System.out.println("No hay más movimientos.");
