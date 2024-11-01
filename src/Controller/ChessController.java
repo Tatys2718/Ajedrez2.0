@@ -243,7 +243,7 @@ public class ChessController {
             throw new IllegalArgumentException("Invalid destination");
 
         int destinationRow = Integer.parseInt(destination.substring(1));
-        return 8 - destinationRow - 1;
+        return destinationRow - 1;
     }
 
 
