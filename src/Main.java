@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file = new File ("src\\Partidas\\pawn_movements_test.txt");
+        File file = new File ("src\\Partidas\\pruebaConFe.txt");
         ReaderPGN reader = new ReaderPGN(file);
         reader.Lecture();
 
