@@ -7,13 +7,4 @@ public class Knight extends Piece{
         super(positionRow, positionColumn, isWhite, image);
     }
 
-    @Override
-    public boolean validMove(int final_x, int final_y) {
-        return false;
-    }
-
-
-    public void move(String destino, int indice) {
-    }
-
 }

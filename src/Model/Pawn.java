@@ -10,7 +10,7 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public boolean validMove(int destRow, int destColumn) {
+    public boolean validMove(int destRow, int destColumn, Piece[][] pieces) {
         // Movimiento hacia adelante de 1 o 2 casillas desde la posición inicial
         int rowDirection = isRed() ? 1 : -1;
 
@@ -33,10 +33,13 @@ public class Pawn extends Piece{
 
         // Movimiento de captura en diagonal
         if (Math.abs(currentColumn - destColumn) == 1 && currentRow + rowDirection == destRow) {
-            return true;
+            // Verificar si hay una pieza en la posición diagonal
+            Piece targetPiece = pieces[destRow][destColumn];
+            if (targetPiece != null && targetPiece.isRed() != this.isRed()) {
+                return true;
+            }
         }
 
-        // Si no cumple ninguna condición, el movimiento no es válido
         return false;
     }
 

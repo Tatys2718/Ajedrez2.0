@@ -63,10 +63,14 @@ public class ChessController {
     }
 
     public void movePiece(String pureMove, int counter) {
-        Move move = movementTranslation(pureMove, counter);
+        Move move = getMoveFromNotation(pureMove, counter);
         if (move == null) {
             System.err.println("Error: movimiento no válido.");
             return; // Salir si el movimiento es nulo
+        }
+
+        if(pureMove.contains("x")) {
+            pieces[move.getDestinoRow()][move.getDestinoCol()] = null;
         }
 
         Piece pieceMoved = move.getOrigin();
@@ -99,7 +103,7 @@ public class ChessController {
         }
     }
 
-    public Move movementTranslation(String pureMove, int counter) {
+    public Move getMoveFromNotation(String pureMove, int counter) {
         Move move = null;
         Piece pieceOrigin = null;
         String destiny;
@@ -118,8 +122,11 @@ public class ChessController {
         } else {
             // Procesar movimiento de peón
             destiny = pureMove.replaceAll("x|=", ""); // Remover solo "x" y "=" para obtener destino limpio
+            System.out.println("Destino: " + destiny);
             destinyCol = getDestinationColumn(destiny);
             destinyRow = getDestinationRow(destiny);
+            System.out.println("Destino Fila: " + destinyRow + " Destino Columna: " + destinyCol);
+
             candidatesOrigin = findOriginPieceCandidates(pureMove, destinyCol, destinyRow, isRed);
         }
 
@@ -160,28 +167,32 @@ public class ChessController {
 
         for (Piece[] piecesVector : pieces) {
             for (Piece individualPiece : piecesVector) {
-                if (individualPiece != null) { // Validar que individualPiece no sea nulo
+                if (individualPiece != null) {
                     System.out.println("Evaluando pieza: " + individualPiece.getClass().getSimpleName() +
                             " color " + (individualPiece.isRed() ? "rojo" : "negro") +
                             " en posición (" + individualPiece.getPositionRow() + ", " + individualPiece.getPositionColumn() + ")");
 
                     // Verificar si la pieza pertenece al jugador correcto
-                    if (isRed == individualPiece.isRed() && matchesPieceType(pieceTypeChar, individualPiece)) {
+                    if (isRed == individualPiece.isRed()) {
                         System.out.println("Pieza pertenece al jugador correcto: " + (isRed ? "Rojo" : "Negro"));
 
-                        // Comprobar si el movimiento es válido
-                        if (individualPiece.validMove(destinyRow, destinyCol)) {
-                            System.out.println("Movimiento válido hacia destino: (" + destinyRow + ", " + destinyCol + ")");
+                        if(matchesPieceType(pieceTypeChar, individualPiece)) {
+                            // Comprobar si el movimiento es válido
+                            if (individualPiece.validMove(destinyRow, destinyCol, pieces)) {
+                                System.out.println("Movimiento válido hacia destino: (" + destinyRow + ", " + destinyCol + ")");
 
-                            // Aplicar restricciones de columna o fila en caso de ambigüedad
-                            if (isOriginValid(originCol, originRow, individualPiece)) {
-                                System.out.println("Origen válido: (" + originCol + ", " + originRow + ")");
-                                candidatesOrigin.add(individualPiece);
+                                // Aplicar restricciones de columna o fila en caso de ambigüedad
+                                if (isOriginValid(originCol, originRow, individualPiece)) {
+                                    System.out.println("Origen válido: (" + originCol + ", " + originRow + ")");
+                                    candidatesOrigin.add(individualPiece);
+                                } else {
+                                    System.out.println("Origen no válido para la pieza: " + individualPiece.getClass().getSimpleName());
+                                }
                             } else {
-                                System.out.println("Origen no válido para la pieza: " + individualPiece.getClass().getSimpleName());
+                                System.out.println("Movimiento no válido hacia destino: (" + destinyRow + ", " + destinyCol + ")");
                             }
                         } else {
-                            System.out.println("Movimiento no válido hacia destino: (" + destinyRow + ", " + destinyCol + ")");
+                            System.out.println("La pieza no coincide...");
                         }
                     } else {
                         System.out.println("Pieza no pertenece al jugador correcto.");
@@ -195,18 +206,24 @@ public class ChessController {
     }
 
     private int getOriginColumn(String pureMove) {
-        if (pureMove.length() == 4 && pureMove.charAt(1) == 'x') {
-            return pureMove.charAt(0) - 'a'; // Si hay una "x" en el movimiento
-        } else if (pureMove.length() >= 3) {
-            return pureMove.charAt(1) - 'a'; // Columna si se especifica
+        if (pureMove.contains("x")) { // Verifica si es una captura
+            // Captura por peones
+            if(!pureMove.matches("^[NBRQK].*") && pureMove.length() >= 4 && pureMove.charAt(1) == 'x') {
+                return pureMove.charAt(0) - 'a';
+            }
+            // Captura de piezas con nombre
+            if (pureMove.matches("^[NBRQK].*")) {
+                return -1;
+            }
         }
-        return -1; // Sin columna de origen
+        return -1;
     }
 
     private int getOriginRow(String pureMove) {
-        if (pureMove.length() >= 3) {
+        if (pureMove.length() > 3) {
             char potentialRow = pureMove.charAt(pureMove.length() - 2);
-            return 8 - Character.getNumericValue(potentialRow); // Ajustar para la orientación del tablero
+            if (Character.isDigit(potentialRow))
+                return Character.getNumericValue(potentialRow) - 1;
         }
         return -1; // Sin fila de origen
     }
@@ -234,16 +251,15 @@ public class ChessController {
         if (destination == null || destination.isEmpty())
             throw new IllegalArgumentException("Invalid destination");
 
-        char destinationColumn = destination.charAt(0);
-        return destinationColumn - 'a';
+        return destination.charAt(destination.length() - 2) - 'a';
     }
 
     public int getDestinationRow(String destination) {
         if (destination == null || destination.length() < 2)
             throw new IllegalArgumentException("Invalid destination");
 
-        int destinationRow = Integer.parseInt(destination.substring(1));
-        return destinationRow - 1;
+        return Integer.parseInt(destination.substring(destination.length()-1)) - 1;
+        // Se le resta 1 por que el vector Pieces empieza desde 0
     }
 
 

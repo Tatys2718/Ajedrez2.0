@@ -17,8 +17,7 @@ public abstract class Piece {
     }
 
     
-    //Comprobar si el movimiento leido es valido para esa ficha
-    public boolean validMove (int destRow, int destColumn){
+    public boolean validMove (int destRow, int destColumn, Piece[][] pieces){
         return true;
     };
     //El movimiento que debe tener la ficha
