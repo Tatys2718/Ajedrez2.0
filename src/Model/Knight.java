@@ -28,5 +28,9 @@ public class Knight extends Piece{
         // Si el movimiento no es válido según las reglas del caballo, devolver false
         return false;
     }
+    @Override
+    public Piece clone() {
+        return new Knight(this.getPositionRow(), this.getPositionColumn(), this.isRed(), new ImageIcon(this.getImage().getImage()));
+    }
 
 }

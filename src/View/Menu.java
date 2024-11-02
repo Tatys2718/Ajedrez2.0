@@ -18,16 +18,22 @@ public class Menu extends JPanel {
         prev.setFocusPainted(false);
 
         // Asegurar un color visible para el texto
-        next.setForeground(Color.BLACK);
-        prev.setForeground(Color.BLACK);
+        next.setForeground(Color.RED);
+        prev.setForeground(Color.RED);
+
+        next.setFont(new Font("Times new roman", Font.BOLD, 15));
+        prev.setFont(new Font("Times new roman", Font.BOLD, 15));
+
+        next.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        prev.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 
         // Establecer color de fondo de ser necesario
-        next.setBackground(Color.LIGHT_GRAY);
-        prev.setBackground(Color.LIGHT_GRAY);
+        next.setBackground(Color.BLACK);
+        prev.setBackground(Color.BLACK);
 
         // Establecer tamaño y posición del botón
-        next.setBounds(100,100,80,58);
-        prev.setBounds(100,170,80,58);
+        next.setBounds(170,70,80,58);
+        prev.setBounds(170,140,80,58);
 
         // Registrar los botones para escuchar eventos de clic
         this.add(next);
@@ -35,6 +41,11 @@ public class Menu extends JPanel {
 
         next.setVisible(true);
         prev.setVisible(true);
+    }
+    public void paintComponent(Graphics g) {
+        Dimension tamanio = getSize();
+        ImageIcon imagen = new ImageIcon(new ImageIcon(getClass().getResource("/View/utils/images/menuBotoneAjedrez.png")).getImage());
+        g.drawImage(imagen.getImage(), 0, 0, tamanio.width, tamanio.height, null);
     }
     public JButton getNextButton() {
         return next;

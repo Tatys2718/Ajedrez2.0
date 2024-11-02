@@ -38,5 +38,8 @@ public class Bishop extends Piece {
         // Si la casilla está vacía o tiene una pieza del oponente, el movimiento es válido
         return targetPiece == null || targetPiece.isRed() != this.isRed();
     }
-
+    @Override
+    public Piece clone() {
+        return new Bishop(this.getPositionRow(), this.getPositionColumn(), this.isRed(), new ImageIcon(this.getImage().getImage()));
+    }
 }

@@ -38,5 +38,8 @@ public class Queen extends Piece{
         }
         return false; // Movimiento no válido
     }
-
+    @Override
+    public Piece clone() {
+        return new Queen(this.getPositionRow(), this.getPositionColumn(), this.isRed(), new ImageIcon(this.getImage().getImage()));
+    }
 }

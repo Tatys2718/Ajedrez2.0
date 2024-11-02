@@ -48,4 +48,5 @@ public abstract class Piece {
         return isRed;
     }
 
+    public abstract Piece clone();
 }

@@ -1,6 +1,5 @@
 import Controller.ChessController;
 import Controller.MenuController;
-import Controller.MoveController;
 import Controller.ReaderPGN;
 import View.ChessBoard;
 import View.Menu;
@@ -12,9 +11,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file = new File ("src\\Partidas\\pruebaConFe.txt");
+        File file = new File ("src\\Partidas\\pruebaSinEnroque.txt");
         ReaderPGN reader = new ReaderPGN(file);
         reader.Lecture();
+        reader.imprimirMetadatos();
 
         if (reader.getMovements() != null) System.out.println("Lectura exitosa. Vector lleno.");
 
@@ -34,7 +34,7 @@ public class Main {
         JFrame menu = new JFrame("Menu juego");
 
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setSize(300, 300);
+        menu.setSize(430, 300);
         Menu meniu = new Menu();
         menu.add(meniu);
         menu.setVisible(true);

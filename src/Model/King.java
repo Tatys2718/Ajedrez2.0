@@ -21,5 +21,8 @@ public class King extends Piece{
         }
         return false; // Movimiento no válido
     }
-
+    @Override
+    public Piece clone() {
+        return new King(this.getPositionRow(), this.getPositionColumn(), this.isRed(), new ImageIcon(this.getImage().getImage()));
+    }
 }

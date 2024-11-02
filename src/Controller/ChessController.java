@@ -10,11 +10,13 @@ import java.util.List;
 public class ChessController {
     private ChessBoard chessBoard;
     private Piece[][] pieces;
-    private MoveController moveController = new MoveController();
+    private List<Piece[][]> boardHistory;
+    private boolean skippingHistory = false;
 
     public ChessController(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
         this.pieces = new Piece[8][8];
+        this.boardHistory = new ArrayList<>();
         initializePieces();
         updateBoard();
     }
@@ -62,7 +64,15 @@ public class ChessController {
         }
     }
 
+    public void setSkippingHistory(boolean skipping) {
+        this.skippingHistory = skipping;
+    }
+
     public void movePiece(String pureMove, int counter) {
+        if (boardHistory.size() == 0 || !sameBoardState(pieces, boardHistory.get(boardHistory.size() - 1))) {
+            boardHistory.add(cloneBoard()); // Guarda el estado actual antes de mover
+        }
+
         Move move = getMoveFromNotation(pureMove, counter);
         if (move == null) {
             System.err.println("Error: movimiento no válido.");
@@ -145,25 +155,6 @@ public class ChessController {
         char pieceTypeChar = pureMove.matches("^[NBRQK].*") ? pureMove.charAt(0) : 'P';
         int originCol = getOriginColumn(pureMove);
         int originRow = getOriginRow(pureMove);
-
-        // Filtrar piezas en el tablero
-//        for (Piece[] piecesVector : pieces) {
-//            for (Piece individualPiece : piecesVector) {
-//                if(individualPiece != null) { // Validar que individualPiece no sea nulo
-//                    // Verificar si la pieza pertenece al jugador correcto
-//                    if (isRed == individualPiece.isRed() && matchesPieceType(pieceTypeChar, individualPiece)) {
-//                        System.out.println();
-//                        // Comprobar si el movimiento es válido
-//                        if (individualPiece.validMove(destinyRow, destinyCol)) {
-//                            // Aplicar restricciones de columna o fila en caso de ambigüedad
-//                            if (isOriginValid(originCol, originRow, individualPiece)) {
-//                                candidatesOrigin.add(individualPiece);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
         for (Piece[] piecesVector : pieces) {
             for (Piece individualPiece : piecesVector) {
@@ -262,5 +253,39 @@ public class ChessController {
         // Se le resta 1 por que el vector Pieces empieza desde 0
     }
 
+    private Piece[][] cloneBoard() {
+        Piece[][] clonedBoard = new Piece[8][8];
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (pieces[row][col] != null) {
+                    clonedBoard[row][col] = pieces[row][col].clone(); // Asegúrate de implementar clone en Piece
+                }
+            }
+        }
+        return clonedBoard;
+    }
+
+    public void undoMove() {
+        if (boardHistory.isEmpty()) {
+            System.err.println("No hay movimientos anteriores.");
+            return;
+        }
+
+        // Restaura el último estado del historial y lo quita de la lista
+        pieces = boardHistory.remove(boardHistory.size() - 1);
+        updateBoard();
+    }
+
+    private boolean sameBoardState(Piece[][] board1, Piece[][] board2) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if ((board1[row][col] == null && board2[row][col] != null) ||
+                        (board1[row][col] != null && !board1[row][col].equals(board2[row][col]))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

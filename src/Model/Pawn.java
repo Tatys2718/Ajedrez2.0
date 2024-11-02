@@ -42,6 +42,10 @@ public class Pawn extends Piece{
 
         return false;
     }
+    @Override
+    public Piece clone() {
+        return new Pawn(this.getPositionRow(), this.getPositionColumn(), this.isRed(), new ImageIcon(this.getImage().getImage()));
+    }
 
 
 }
